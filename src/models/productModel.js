@@ -1,10 +1,26 @@
-const prisma = require('../config/dbConfig');  // Prisma Client import
+const prisma = require('../config/dbConfig'); 
 
-// Get product by ID
+const getAllProducts = async () => {
+  try {
+    return await prisma.product.findMany();
+  } catch (error) {
+    console.error('Error in getAllProducts:', error);
+    throw new Error('Error fetching all products');
+  }
+};
+
+
 const getProductById = async (id) => {
   try {
+
+    const productID = parseInt(id, 10);
+
+    if(isNaN(productID)){
+      throw new Error('Invalid product ID');
+    }
+
     return await prisma.product.findUnique({
-      where: { id: id },
+      where: { id: productID },
     });
   } catch (error) {
     console.error('Error in getProductById:', error);
@@ -12,7 +28,6 @@ const getProductById = async (id) => {
   }
 };
 
-// Create new product
 const createProduct = async (name, price, stock) => {
   try {
     return await prisma.product.create({
@@ -28,11 +43,16 @@ const createProduct = async (name, price, stock) => {
   }
 };
 
-// Update existing product
 const updateProduct = async (id, name, price, stock) => {
   try {
+    const productId = parseInt(id, 10);
+
+    if (isNaN(productId)) {
+      throw new Error("Invalid product ID");
+    }
+
     return await prisma.product.update({
-      where: { id: id },
+      where: { id: productId },
       data: {
         name,
         price,
@@ -45,11 +65,16 @@ const updateProduct = async (id, name, price, stock) => {
   }
 };
 
-// Delete a product by ID
 const deleteProduct = async (id) => {
   try {
+    const productId = parseInt(id, 10);
+
+    if (isNaN(productId)) {
+      throw new Error("Invalid product ID");
+    }
+
     return await prisma.product.delete({
-      where: { id: id },
+      where: { id: productId },
     });
   } catch (error) {
     console.error('Error in deleteProduct:', error);
@@ -58,6 +83,7 @@ const deleteProduct = async (id) => {
 };
 
 module.exports = {
+  getAllProducts,
   getProductById,
   createProduct,
   updateProduct,

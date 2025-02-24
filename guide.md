@@ -37,3 +37,4 @@
 └── server.js                # Main server entry point (Express app)
 
 npx prisma migrate dev --name init
+https://chatgpt.com/c/67bb3af7-6c34-8004-9117-64c3cd9ac7a2

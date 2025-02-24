@@ -46,7 +46,19 @@ const login = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  try {
+    res.cookie('token', '', { expires: new Date(0), httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Error in logout:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   register,
   login,
+  logout,
 };

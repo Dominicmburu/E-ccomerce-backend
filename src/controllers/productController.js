@@ -1,4 +1,17 @@
-const { getProductById, createProduct, updateProduct, deleteProduct } = require('../services/productService');
+const { getProductById, createProduct, updateProduct, deleteProduct, getAllProducts } = require('../services/productService');
+
+const getProducts = async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found' });
+    }
+    res.status(200).json(products); 
+  } catch (error) {
+    console.error('Error in getProducts:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 const getProduct = async (req, res) => {
   const { id } = req.params;
@@ -55,6 +68,7 @@ const removeProduct = async (req, res) => {
 };
 
 module.exports = {
+  getProducts,
   getProduct,
   addProduct,
   modifyProduct,

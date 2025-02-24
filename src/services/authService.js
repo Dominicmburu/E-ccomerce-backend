@@ -53,7 +53,7 @@ const loginUser = async (username, password) => {
 const sendTokenInCookie = (res, token) => {
   res.cookie('authToken', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // Secure cookie in production
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 3600000, 
   });
 };
