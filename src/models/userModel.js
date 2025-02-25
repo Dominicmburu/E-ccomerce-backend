@@ -28,7 +28,6 @@ const createUser = async (username, email, password) => {
 
 const getUserById = async (id) => {
   try {
-    console.log("Getting user by ID:", id);
     return await prisma.user.findUnique({
       where: { id: parseInt(id) },
     });
@@ -46,7 +45,6 @@ const updateUser = async (id, username, email) => {
       throw new Error('Invalid user ID');
     }
 
-    console.log("Updating user with ID:", id, { username, email });
     return await prisma.user.update({
       where: { id: userId },
       data: { username, email },

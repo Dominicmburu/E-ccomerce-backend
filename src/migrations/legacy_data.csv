@@ -1,0 +1,4 @@
+product_name,product_price,product_stock,user_name,user_email
+"Product 1",19.99,100,"user1","user1@example.com"
+"Product 2",29.99,50,"user2","user2@example.com"
+"Product 3",39.99,150,"user3","user3@example.com"

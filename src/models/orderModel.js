@@ -1,4 +1,4 @@
-const prisma = require("../config/dbConfig"); // Prisma Client import
+const prisma = require("../config/dbConfig");
 
 const createOrder = async (userId, productId, quantity) => {
   try {
