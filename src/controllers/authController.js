@@ -1,6 +1,5 @@
 const { registerUser, loginUser } = require('../services/authService');
 const { sendTokenInCookie } = require('../services/authService');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {

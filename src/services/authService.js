@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const userModel = require('../models/userModel');
 const { secret, expiresIn } = require('../config/jwtConfig');
+const { hashPassword, comparePassword } = require('../utils/cryptoUtils');  // Import functions
+
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, secret, { expiresIn });
@@ -20,11 +21,9 @@ const registerUser = async (username, email, password) => {
       throw new Error('User already exists');
     }
 
-    console.log('Attempting to register user:', username, email);
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { salt, hash } = await hashPassword(password);
     
-    const result = await userModel.createUser(username, email, hashedPassword);
-    console.log('Registration result:', result);
+    const result = await userModel.createUser(username, email, hash, salt);
     return result;
   } catch (err) {
     console.error('Error in registerUser:', err);
@@ -39,7 +38,7 @@ const loginUser = async (username, password) => {
       throw new Error('Invalid credentials');
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await comparePassword(password, user.password, user.salt);
     if (!isMatch) {
       throw new Error('Invalid credentials');
     }

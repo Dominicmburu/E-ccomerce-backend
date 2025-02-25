@@ -11,13 +11,14 @@ const getUserByUsername = async (username) => {
   }
 };
 
-const createUser = async (username, email, password) => {
+const createUser = async (username, email, password, salt) => {
   try {
     return await prisma.user.create({
       data: {
         username,
         email,
         password, 
+        salt,
       },
     });
   } catch (error) {
